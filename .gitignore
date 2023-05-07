@@ -1,0 +1,6 @@
+.vagrant/
+iot.box
+iotBox/*.log
+secrets/keys/*
+secrets/addresses/*
+secrets/minerkey
