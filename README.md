@@ -66,7 +66,7 @@ The project was built and tested with the following programs and versions
 This section shows how to install the project on Ubuntu 20.04.6.
 
 ### Prerequisites and installation
-Before installing the some programs need to be installed.
+Before installing some programs need to be installed.
 
 * VirtualBox
   ```sh
