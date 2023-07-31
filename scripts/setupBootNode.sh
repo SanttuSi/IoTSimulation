@@ -1,1 +1,0 @@
-tmux new-session -d -s my_session 'bootnode -nodekey /vagrant/secrets/bootnodeconf/boot.key -addr "10.1.0.2:30305"'

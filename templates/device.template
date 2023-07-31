@@ -1,4 +1,3 @@
-
 config.vm.define "deviceX" do |deviceX|
   deviceX.vm.box = "iotBox"
   deviceX.vm.network "private_network",
@@ -6,12 +5,11 @@ config.vm.define "deviceX" do |deviceX|
     netmask: "255.255.255.0",
     virtualbox__intnet: "private_net"
   deviceX.vm.hostname = "deviceX"
-  deviceX.vm.provision :shell, path: "scripts/startup.sh" , env: {"IPADDRESS" => "10.1.0.1SUBADDR", "NAME" => "deviceX"}
+  deviceX.vm.provision :shell, path: "scripts/setupDevice.sh" 
   deviceX.vm.provider "virtualbox" do |vb|
     vb.name = "deviceX"
     vb.cpus = 1
     vb.memory = 1024
-    vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+    vb.customize ["modifyvm", :id, "--cpuexecutioncap", "10"]
   end
 end
-
