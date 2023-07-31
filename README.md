@@ -3,59 +3,20 @@
 
 
 
-
-
-
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-  </ol>
-</details>
-
-
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-This project is a tool that could be used to test blockchain-enabled IoT applications. The project can be used to create a variable amount of simulated IoT devices. These IoT devices run Ubuntu by default and have 1GB of ram, with the CPU executioncap set to 10%. The paramters of the devices are configurable.
-Here is a nutshell of what the tool does:
-* Download and ubdate ubuntu/bionic64 and then package it to a base box in VirtualBox
-* Generate a Vagrantfile based on the template files that are provided by the developer
-* Use vagrant to generate IoT devices based on this generated Vagrantfile
+<!-- ABOUT THIS EXAMPLE -->
+## About This Example
+This branch is an example of how the project could be used to test blockchain-enabled IoT applications.
+The project can be used to create a variable amount of simulated IoT devices in a private ethereum network.
+These IoT devices are by default configured to install and run the Geth client in a private blockchain.
+Here is a nutshell of what the project does:
+* Generate ethereum private keys for each node
+* Generate wallet addresses based on these keys
+* Generate genesis block (using ethhash) which has funds for each of these wallets
+* Use vagrant to generate IoT devices with VirtualBox that run the Geth client on the private chain
+* Run a test that uses geth on the devices
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-### Built With
-
-The project was built and tested with the following programs and versions
-
-* Ubuntu 20.04.6
-* Vagrant 2.3.4
-* VirtualBox 7.0.4
-* Python 3.8.10
-* OpenSSL 1.1.1f
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- GETTING STARTED -->
@@ -63,7 +24,7 @@ The project was built and tested with the following programs and versions
 
 This section shows how to install the project on Ubuntu 20.04.6.
 
-### Prerequisites and installation
+### Prerequisites
 Before installing some programs need to be installed.
 
 * VirtualBox
@@ -85,32 +46,43 @@ Before installing some programs need to be installed.
   pip install eth-keys eth-hash[pycryptodome]
   ```
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- USAGE EXAMPLES -->
 ## Usage
-In this example, the tool is used to configure 5 virtual IoT devices.
-Other examples, such as running a blockchain enabled IoT application with the tool are provided on the validation test branches.
+In this example, the tool is used to configure 5 virtual IoT devices, a bootnode and a sensor node.
+These VMs run the custom Ethereum chain trough the clients. Then a test is conducted on the environment creation.
+The steps to reproduce tests are as follows:
+
 
 Step 1:
   Install the previously mentioned dependencies.
   
 Step 2:
-  Clone the repository:
-  ```
+  Clone the repository
+  ```sh
   git clone https://github.com/SanttuSi/IoTSimulation.git
   ```
-step 3:
-  Run the tool:
+step 3: Generate the required secrets
+  ```sh
+  cd IoTSimulation/
+  cd secrets/
+  ./genSecrets.sh -n 5
+  cd ..
   ```
+step 4: 
+  Run the tool
+  ```sh
   cd IoTSimulation/
   ./startup.sh -n 5
   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-
-
+step 5: Run the testing script 
+  ```sh
+  mv testEnv.sh ../
+  cd ..
+  ./testEnv.sh
+  ```
 
 <!-- LICENSE -->
 ## License
