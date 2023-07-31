@@ -3,61 +3,20 @@
 
 
 
-
-
-
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-  </ol>
-</details>
-
-
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-This project is an example of how Vagrant could be used to test IoT based blockchain applications. The project can be used to create a variable amount of simulated IoT devices in a private ethereum network. These IoT devices are by default configured to install and run the Geth client in a private blockchain.
+<!-- ABOUT THIS EXAMPLE -->
+## About This Example
+This branch is an example of how the project could be used to test blockchain-enabled IoT applications.
+The project can be used to create a variable amount of simulated IoT devices in a private ethereum network.
+These IoT devices are by default configured to install and run the Geth client in a private blockchain.
 Here is a nutshell of what the project does:
 * Generate ethereum private keys for each node
 * Generate wallet addresses based on these keys
 * Generate genesis block (using ethhash) which has funds for each of these wallets
-* Use vagrant to generate IoT devices with VirtualBox that run the Geth  client on the private chain
-
+* Use vagrant to generate IoT devices with VirtualBox that run the Geth client on the private chain
+* Run a test that uses an application on the devices
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-### Built With
-
-The project was built and tested with the following programs and versions
-
-* Ubuntu 20.04.6
-* Vagrant 2.3.4
-* VirtualBox 7.0.4
-* Python 3.8.10
-* OpenSSL 1.1.1f
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- GETTING STARTED -->
@@ -65,35 +24,66 @@ The project was built and tested with the following programs and versions
 
 This section shows how to install the project on Ubuntu 20.04.6.
 
-### Prerequisites and installation
+### Prerequisites
 Before installing some programs need to be installed.
 
 * VirtualBox
   ```sh
   sudo apt-get install virtualbox
   ```
-* Vagrant
+* Vagrant 2.3.2
   ```sh
-  curl -O https://releases.hashicorp.com/vagrant/2.3.4/vagrant_2.3.4_x86_64.deb
-  sudo apt install ./vagrant_2.3.4_x86_64.deb
+  wget https://releases.hashicorp.com/vagrant/2.3.2/vagrant_2.3.2-1_amd64.deb
+  sudo apt install ./vagrant_2.3.2-1_amd64.deb
   vagrant plugin install vagrant-vbguest
   ```
-* Python deps
+* Pip ( Used by the tests in the test branches)
   ```sh
-  pip install eth-keys
+  sudo apt install pip
+  ```
+* Python deps ( Used by the tests in the test branches)
+  ```sh
+  pip install eth-keys eth-hash[pycryptodome]
   ```
 
-<!-- USAGE EXAMPLES -->
-## Usage
-
-TODO
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-
-
+<!-- USAGE EXAMPLES -->
+## Usage
+In this example, the tool is used to configure 5 virtual IoT devices, a bootnode and a sensor node. These VMs run the custom Ethereum chain trough the clients.
+Additionally, the devices will run a custom application.
+The steps to reproduce tests are as follows:
+Step 1:
+  Install the previously mentioned dependencies.
+  
+Step 2:
+  Clone the repository
+  ```sh
+  git clone https://github.com/SanttuSi/IoTSimulation.git
+  ```
+step 2: Generate the required secrets
+  ```sh
+  cd IoTSimulation/
+  cd secrets/
+  ./genSecrets.sh -n 5
+  cd ..
+  ```
+step 3: 
+  Run the tool
+  ```sh
+  cd IoTSimulation/
+  ./startup.sh -n 5
+  ```
+step 4: Run the testing script and wait for it to finish
+  ```sh
+  ./runVehicles.sh
+  ```
+step 5: Ssh into the sensor and start the sensor client
+  ```sh
+  vagrant ssh sensor
+  sudo python3 /vagrant/apps/SensorClient.py
+  ```
 
 <!-- LICENSE -->
 ## License
