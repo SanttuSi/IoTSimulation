@@ -33,13 +33,11 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-This project is an example of how Vagrant could be used to test IoT based blockchain applications. The project can be used to create a variable amount of simulated IoT devices in a private ethereum network. These IoT devices are by default configured to install and run the Geth client in a private blockchain.
-Here is a nutshell of what the project does:
-* Generate ethereum private keys for each node
-* Generate wallet addresses based on these keys
-* Generate genesis block (using ethhash) which has funds for each of these wallets
-* Use vagrant to generate IoT devices with VirtualBox that run the Geth  client on the private chain
-
+This project is a tool that could be used to test blockchain-enabled IoT applications. The project can be used to create a variable amount of simulated IoT devices. These IoT devices run Ubuntu by default and have 1GB of ram, with the CPU executioncap set to 10%. The paramters of the devices are configurable.
+Here is a nutshell of what the tool does:
+* Download and ubdate ubuntu/bionic64 and then package it to a base box in VirtualBox
+* Generate a Vagrantfile based on the template files that are provided by the developer
+* Use vagrant to generate IoT devices based on this generated Vagrantfile
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -72,21 +70,40 @@ Before installing some programs need to be installed.
   ```sh
   sudo apt-get install virtualbox
   ```
-* Vagrant
+* Vagrant 2.3.2
   ```sh
-  curl -O https://releases.hashicorp.com/vagrant/2.3.4/vagrant_2.3.4_x86_64.deb
-  sudo apt install ./vagrant_2.3.4_x86_64.deb
+  wget https://releases.hashicorp.com/vagrant/2.3.2/vagrant_2.3.2-1_amd64.deb
+  sudo apt install ./vagrant_2.3.2-1_amd64.deb
   vagrant plugin install vagrant-vbguest
   ```
-* Python deps
+* Pip ( Used by the tests in the test branches)
   ```sh
-  pip install eth-keys
+  sudo apt install pip
+  ```
+* Python deps ( Used by the tests in the test branches)
+  ```sh
+  pip install eth-keys eth-hash[pycryptodome]
   ```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+In this example, the tool is used to configure 5 virtual IoT devices.
+Other examples, such as running a blockchain enabled IoT application with the tool are provided on the validation test branches.
 
-TODO
+Step 1:
+  Install the previously mentioned dependencies.
+  
+Step 2:
+  Clone the repository:
+  ```
+  git clone https://github.com/SanttuSi/IoTSimulation.git
+  ```
+step 3:
+  Run the tool:
+  ```
+  cd IoTSimulation/
+  ./startup.sh -n 5
+  ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
