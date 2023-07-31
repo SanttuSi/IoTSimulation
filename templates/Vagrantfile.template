@@ -13,6 +13,21 @@ config.vm.define "bootNode" do |bootNode|
     vb.memory = 1024
   end
 end
+config.vm.define "sensor" do |sensor|
+  sensor.vm.box = "iotBox"
+  sensor.vm.network "private_network",
+    ip: "10.1.0.3",
+    netmask: "255.255.255.0",
+    virtualbox__intnet: "private_net"
+  sensor.vm.hostname = "sensor"
+  sensor.vm.provision :shell, path: "scripts/setupDevice.sh",  env: {"IPADDRESS" => "10.1.0.3"}
+  sensor.vm.provider "virtualbox" do |vb|
+    vb.name = "sensor"
+    vb.cpus = 1
+    vb.memory = 1024
+    vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+  end
+end
 
   #Start
 
