@@ -54,6 +54,8 @@ Before installing some programs need to be installed.
 In this example, the tool is used to configure 5 virtual IoT devices, a bootnode and a sensor node. These VMs run the custom Ethereum chain trough the clients.
 Additionally, the devices will run a custom application.
 The steps to reproduce tests are as follows:
+
+
 Step 1:
   Install the previously mentioned dependencies.
   
@@ -62,24 +64,24 @@ Step 2:
   ```sh
   git clone https://github.com/SanttuSi/IoTSimulation.git
   ```
-step 2: Generate the required secrets
+step 3: Generate the required secrets
   ```sh
   cd IoTSimulation/
   cd secrets/
   ./genSecrets.sh -n 5
   cd ..
   ```
-step 3: 
+step 4: 
   Run the tool
   ```sh
   cd IoTSimulation/
   ./startup.sh -n 5
   ```
-step 4: Run the testing script and wait for it to finish
+step 5: Run the testing script and wait for it to finish
   ```sh
   ./runVehicles.sh
   ```
-step 5: Ssh into the sensor and start the sensor client
+step 6: Ssh into the sensor and start the sensor client
   ```sh
   vagrant ssh sensor
   sudo python3 /vagrant/apps/SensorClient.py
